@@ -55,8 +55,6 @@ If you are not usin Bosh Lite, your deployment will require more customization. 
 
 For an example manifest, check out `./manifests/examples/example_manifest.yml`
 
-
-
 You are now ready to deploy:
 
 ```
