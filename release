@@ -4,7 +4,9 @@
 
 bosh sync blobs
 
-cp config/final.yaml config/final.yaml.bk
-cp config/final.yaml.local config/final.yaml
+cp config/final.yml config/final.yml.bk
+cp config/final.yml.local config/final.yml
 
 bosh create release --final --force --with-tarball
+cp config/final.yml.bk config/final.yml
+rm config/final.yml.bk

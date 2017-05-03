@@ -82,7 +82,7 @@ builds:
     version: '40'
   3d3a86c8-def7-4004-9136-6b06583bacca:
     version: '41'
-  08cfc711-10f3-4794-95ad-8dc5746eb72f:
+  '08cfc711-10f3-4794-95ad-8dc5746eb72f':
     version: '42'
   31679fb2-15d5-4983-85b9-308e9917c65e:
     version: '43'
@@ -118,4 +118,6 @@ builds:
     version: '58'
   c072e6f4-c79f-4794-ad65-cd8337924c9f:
     version: '59'
+  f2a8fece-1632-4a9e-88a9-de6458dc85ba:
+    version: '60'
 format-version: '2'
