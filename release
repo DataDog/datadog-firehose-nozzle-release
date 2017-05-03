@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+./prepare
+
+bosh sync blobs
+
+cp config/final.yaml config/final.yaml.bk
+cp config/final.yaml.local config/final.yaml
+
+bosh create release --final --force --with-tarball
