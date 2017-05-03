@@ -53,7 +53,7 @@ with:
 
 If you are not usin Bosh Lite, your deployment will require more customization. If you look at the current templates, you'll get a good sense of what you'll need to do in order to deploy the firehose.
 
-
+For an example manifest, check out `./manifests/examples/example_manifest.yml`
 
 
 
