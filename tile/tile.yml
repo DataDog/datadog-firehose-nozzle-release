@@ -1,8 +1,22 @@
 ---
 name: datadog
-icon_file: resources/icon.png
+icon_file: ./resources/icon.png
 label: Datadog Integration for Cloud Foundry
 description: Send metrics from Cloud Foundry metrics to Datadog!
+
+apply_open_security_group: false       # Apply open security group, default: false
+allow_paid_service_plans: false        # Allow paid service plans, default: false
+
+stemcell_criteria:
+  os: ubuntu-trusty
+  requires_cpi: false
+  version: '3263'
+
+properties:
+- name: author
+  type: string
+  label: Author
+  value: Greg Meyer
 
 forms:
 - name: datadog-config
@@ -18,13 +32,11 @@ forms:
     label: Datadog API URL
     description: The Datadog API endpoint to send your metrics to
     default: https://app.datadoghq.com/api/v1/series
-    optional: true
   - name: metric_prefix
     type: string
     label: string
     description: The
     default: cloudfoundry.nozzle.
-    optional: true
 
 - name: cf-config
   label: Cloud Foundry Settings
@@ -67,7 +79,7 @@ packages:
 - name: datadog-firehose-nozzle-release
   type: bosh-release
   manifest:
-    path: resources/datadog-firehose-nozzle-release-{{version}}.tgz
+    path: ./resources/datadog-firehose-nozzle-release-{{version}}.tgz
     jobs:
       - name: datadog-firehose-nozzle
         templates:
