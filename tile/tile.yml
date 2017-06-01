@@ -1,6 +1,5 @@
----
 name: datadog
-icon_file: ./resources/icon.png
+icon_file: resources/icon.png
 label: Datadog Integration for Cloud Foundry
 description: Send metrics from Cloud Foundry metrics to Datadog!
 
@@ -46,10 +45,10 @@ forms:
     the built in user `datadog-firehose-nozzle` will be used when no user is specified.
 
     API user is **required** for earlier versions of the Elastic Runtimes.
-    Failing to specify the API user on versions without `splunk-firehose` will result in:
+    Failing to specify the API user on versions without `datadog-firehose` will result in:
 
     ```
-    unknown property "splunk_firehose_credentials"...
+    unknown property "datadog_firehose_credentials"...
     ```
 
     See the docs for detailed instructions on creating a user.
@@ -79,7 +78,7 @@ packages:
 - name: datadog-firehose-nozzle-release
   type: bosh-release
   manifest:
-    path: ./resources/datadog-firehose-nozzle-release-{{version}}.tgz
+    path: resources/datadog-firehose-nozzle-release-59+dev.11.tgz
     jobs:
       - name: datadog-firehose-nozzle
         templates:
@@ -98,6 +97,6 @@ packages:
             insecure_ssl_skip_verify: (( .properties.insecure_ssl_skip_verify.value ))
             subscription_id: (( .properties.firehose_subscription_id.value ))
           uaa:
-            client: (( ..cf.uaa.splunk_firehose_credentials.identity ))
-            client_secret: (( ..cf.uaa.splunk_firehose_credentials.password ))
+            client: (( ..cf.uaa.datadog_firehose_credentials.identity ))
+            client_secret: (( ..cf.uaa.datadog_firehose_credentials.password ))
             url: https://uaa.(( ..cf.cloud_controller.system_domain.value ))
