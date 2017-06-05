@@ -34,8 +34,8 @@ forms:
   - name: metric_prefix
     type: string
     label: string
-    description: The
-    default: cloudfoundry.nozzle.
+    description: The metric prefix. Setting this to anything other than the default will have billing implications.
+    optional: true
 
 - name: cf-config
   label: Cloud Foundry Settings
