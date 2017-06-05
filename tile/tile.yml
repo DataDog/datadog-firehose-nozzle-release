@@ -77,26 +77,26 @@ forms:
 packages:
 - name: datadog-firehose-nozzle-release
   type: bosh-release
-  manifest:
-    path: resources/datadog-firehose-nozzle-release-59+dev.11.tgz
-    jobs:
+  path: resources/datadog-firehose-nozzle-release-59+dev.11.tgz
+  jobs:
+    - name: datadog-firehose-nozzle
+      templates:
       - name: datadog-firehose-nozzle
-        templates:
-        - name: datadog-firehose-nozzle
-          release: datadog-firehose-nozzle
-        dynamic_id: 1
-        instances: 1
-        properties:
-          datadog:
-            api_key: (( .properties.api_key.value ))
-            api_url: (( .propertiaes.api_url.value ))
-            metric_prefix: (( .properties.metric_prefix.value ))
-          loggregator:
-            traffic_controller_url: https://wss.(( ..cf.cloud_controller.system_domain.value )):443
-          nozzle:
-            insecure_ssl_skip_verify: (( .properties.insecure_ssl_skip_verify.value ))
-            subscription_id: (( .properties.firehose_subscription_id.value ))
-          uaa:
-            client: (( ..cf.uaa.datadog_firehose_credentials.identity ))
-            client_secret: (( ..cf.uaa.datadog_firehose_credentials.password ))
-            url: https://uaa.(( ..cf.cloud_controller.system_domain.value ))
+        release: datadog-firehose-nozzle
+      dynamic_ip: 1
+      instances: 1
+      properties:
+        datadog:
+          api_key: (( .properties.api_key.value ))
+          api_url: (( .properties.api_url.value ))
+          metric_prefix: (( .properties.metric_prefix.value ))
+        loggregator:
+          traffic_controller_url: https://wss.(( ..cf.cloud_controller.system_domain.value )):443
+        nozzle:
+          insecure_ssl_skip_verify: (( .properties.insecure_ssl_skip_verify.value ))
+          subscription_id: (( .properties.firehose_subscription_id.value ))
+          deployment: (( name ))
+        uaa:
+          client: (( .properties.api_user.value || ..cf.uaa.datadog_firehose_credentials.identity ))
+          client_secret: (( .properties.api_password.value || ..cf.uaa.datadog_firehose_credentials.password ))
+          url: https://uaa.(( ..cf.cloud_controller.system_domain.value ))
