@@ -33,7 +33,7 @@ forms:
     default: https://app.datadoghq.com/api/v1/series
   - name: metric_prefix
     type: string
-    label: string
+    label: Metric Prefix
     description: The metric prefix. Setting this to anything other than the default will have billing implications.
     optional: true
 
