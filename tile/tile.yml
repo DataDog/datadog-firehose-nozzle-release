@@ -1,6 +1,6 @@
 name: datadog
 icon_file: resources/icon.png
-label: Datadog Integration for Cloud Foundry
+label: Datadog Nozzle for PCF
 description: Send metrics from Cloud Foundry metrics to Datadog!
 
 apply_open_security_group: false       # Apply open security group, default: false
@@ -23,7 +23,7 @@ forms:
   description: Configure your datadog nozzle!
   properties:
   - name: api_key
-    type: string
+    type: secret
     label: Datadog API Key
     description: Your Datadog API Key
   - name: api_url
@@ -58,6 +58,11 @@ forms:
     label: Skip SSL validation
     default: false
     description: Skip SSL validation (to allow things like self-signed certs). Do not set to true in production.
+  - name: disable_access_control
+    type: boolean
+    label: Disable Access Control
+    default: false
+    description: Disable Access Control
   - name: api_user
     type: string
     label: API user
@@ -91,9 +96,10 @@ packages:
           api_url: (( .properties.api_url.value ))
           metric_prefix: (( .properties.metric_prefix.value ))
         loggregator:
-          traffic_controller_url: https://wss.(( ..cf.cloud_controller.system_domain.value )):443
+          traffic_controller_url: wss://(( ..cf.cloud_controller.system_domain.value )):443
         nozzle:
           insecure_ssl_skip_verify: (( .properties.insecure_ssl_skip_verify.value ))
+          disable_access_control: (( .properties.disable_access_control.value ))
           subscription_id: (( .properties.firehose_subscription_id.value ))
           deployment: (( name ))
         uaa:
