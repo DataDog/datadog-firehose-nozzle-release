@@ -96,7 +96,7 @@ packages:
           api_url: (( .properties.api_url.value ))
           metric_prefix: (( .properties.metric_prefix.value ))
         loggregator:
-          traffic_controller_url: wss://(( ..cf.cloud_controller.system_domain.value )):443
+          traffic_controller_url: wss://doppler.(( ..cf.cloud_controller.system_domain.value )):443
         nozzle:
           insecure_ssl_skip_verify: (( .properties.insecure_ssl_skip_verify.value ))
           disable_access_control: (( .properties.disable_access_control.value ))
