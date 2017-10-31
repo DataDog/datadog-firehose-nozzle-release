@@ -65,7 +65,7 @@ properties:
     default: ""
   nozzle.app_metrics:
     description: "Turn on grabbing of app metrics (may substantially increase load)"
-    default: false
+    default: true
   nozzle.workers:
     description: "The number of worker threads to use"
     default: 4
