@@ -80,11 +80,6 @@ forms:
     label: Firehose subscription id
     default: datadog-firehose-subscription-id
     description: Subscription id unique to nozzle; firehose balances across socket connections having same id.
-  - name: instances
-    type: integer
-    label: Nozzle Instances
-    description: The number of instances of the nozzle to create
-    default: 1
   - name: num_workers
     type: integer
     label: Number of Worker Threads
@@ -106,7 +101,7 @@ packages:
       - name: datadog-firehose-nozzle
         release: datadog-firehose-nozzle
       dynamic_ip: 1
-      instances: (( .properties.instances.value ))
+      instances: 1
       properties:
         datadog:
           api_key: (( .properties.api_key.value ))
