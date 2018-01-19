@@ -81,3 +81,6 @@ properties:
   nozzle.https_proxy_url:
     description: "Use an https proxy"
     default: ""
+  nozzle.no_proxy:
+    description: "Hosts that should skip the proxy"
+    default: ""
