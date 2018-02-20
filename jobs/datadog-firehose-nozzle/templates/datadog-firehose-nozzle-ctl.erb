@@ -6,37 +6,29 @@ TMP_DIR=/var/vcap/sys/tmp/datadog-firehose-nozzle
 PIDFILE=$RUN_DIR/datadog-firehose-nozzle.pid
 
 case $1 in
+  start)
+    mkdir -p $RUN_DIR
+    mkdir -p $LOG_DIR
+    mkdir -p $TMP_DIR
 
-start)
+    chown -R vcap:vcap $LOG_DIR
+    chown -R vcap:vcap $TMP_DIR
 
-mkdir -p $RUN_DIR
-mkdir -p $LOG_DIR
-mkdir -p $TMP_DIR
+    (crontab -l | sed /datadog.*logrotate/d; cat /var/vcap/jobs/datadog-firehose-nozzle/config/datadog_logrotate.cron) | sed /^$/d | crontab
 
-chown -R vcap:vcap $LOG_DIR
-chown -R vcap:vcap $TMP_DIR
+    exec >>$LOG_DIR/datadog-firehose-nozzle.stdout.log \
+        2>>$LOG_DIR/datadog-firehose-nozzle.stderr.log
 
-(crontab -l | sed /datadog.*logrotate/d; cat /var/vcap/jobs/datadog-firehose-nozzle/config/datadog_logrotate.cron) | sed /^$/d | crontab
+    chpst -u vcap:vcap /var/vcap/packages/datadog-firehose-nozzle/datadog-firehose-nozzle \
+    --config /var/vcap/jobs/datadog-firehose-nozzle/config/datadog-firehose-nozzle.json --debug &
 
-exec >>$LOG_DIR/datadog-firehose-nozzle.stdout.log \
-    2>>$LOG_DIR/datadog-firehose-nozzle.stderr.log
-
-chpst -u vcap:vcap /var/vcap/packages/datadog-firehose-nozzle/datadog-firehose-nozzle \
---config /var/vcap/jobs/datadog-firehose-nozzle/config/datadog-firehose-nozzle.json --debug &
-
-echo $! > $PIDFILE
-
-;;
-
-stop)
-kill -9 `cat $PIDFILE`
-rm -f $PIDFILE
-
-;;
-
-*)
-echo "Usage: datadog-firehose-nozzle {start|stop}"
-
-;;
-
+    echo $! > $PIDFILE
+  ;;
+  stop)
+    kill -9 `cat $PIDFILE`
+    rm -f $PIDFILE
+  ;;
+  *)
+    echo "Usage: datadog-firehose-nozzle {start|stop}"
+  ;;
 esac
