@@ -37,6 +37,22 @@ forms:
     label: Tags
     description: Set custom tags, separated by a comma (e.g. foundry:myfoundry,env:production)
     optional: true
+  - name: http_proxy_url
+    type: string
+    optional: true
+    label: HTTP Proxy URL
+    description: Set a URL for an http proxy
+  - name: https_proxy_url
+    type: string
+    optional: true
+    label: HTTPS Proxy URL
+    description: Set a URL for an https proxy
+  - name: no_proxy
+    type: string
+    optional: true
+    label: No Proxy
+    description: Set urls that should skip the proxy, separated by a comma (e.g. datadoghq.com,google.com,example.engineering)
+
 - name: datadog-nozzle-config
   label: Datadog Firehose Nozzle Config
   description: Configure your Datadog Firehose Nozzle
@@ -51,6 +67,17 @@ forms:
     label: App Metrics
     default: true
     description: Grab app container metrics (e.g. cpu and memory usage).
+  - name: num_workers
+    type: integer
+    label: Number of Worker Threads
+    description: The number of worker threads to use in the nozzle
+    default: 4
+  - name: grab_interval
+    type: integer
+    label: App Metrics Interval
+    description: The interval at which to grab the app metrics
+    default: 10
+
 - name: datadog-agent-config
   label: Datadog Agent Config
   description: Configure your Datadog Agent!
@@ -58,7 +85,7 @@ forms:
   - name: use_uuid_hostname
     type: boolean
     label: Use UUID Hostname
-    default: true
+    default: false
     description: By default we use a friendly hostname, this might cause problems with some setups. Set this to use the UUID instead. (In an environment where there are multiple hosts of the same type on different deployments or in different foundries, this will be necessary.) If dd.hostname is set, it will take precedence over the uuid hostname.
   - name: process_agent_enabled
     label: Enable Process Agent
@@ -125,6 +152,7 @@ forms:
     default: '1'
     label: Forwarder Workers
     description: "The number of workers used by the forwarder. Please note each worker will open an outbound HTTP connection towards Datadog's metrics intake at every flush."
+
 - name: cf-config
   label: Cloud Foundry Settings
   description: Cloud Foundry connection details
@@ -163,31 +191,6 @@ forms:
     label: Firehose subscription id
     default: datadog-firehose-subscription-id
     description: Subscription id unique to nozzle; firehose balances across socket connections having same id.
-  - name: num_workers
-    type: integer
-    label: Number of Worker Threads
-    description: The number of worker threads to use in the nozzle
-    default: 4
-  - name: grab_interval
-    type: integer
-    label: App Metrics Interval
-    description: The interval at which to grab the app metrics
-    default: 10
-  - name: http_proxy_url
-    type: string
-    optional: true
-    label: HTTP Proxy URL
-    description: Set a URL for an http proxy
-  - name: https_proxy_url
-    type: string
-    optional: true
-    label: HTTPS Proxy URL
-    description: Set a URL for an https proxy
-  - name: no_proxy
-    type: string
-    optional: true
-    label: No Proxy
-    description: Set urls that should skip the proxy, separated by a comma (e.g. datadoghq.com,google.com,example.engineering)
 
 packages:
 - name: datadog-firehose-nozzle-release
@@ -234,7 +237,7 @@ runtime_configs:
     runtime_config:
       releases:
         - name: datadog-agent
-          version: 1.2.5220+dev.26 # Update this if update the agent
+          version: 1.2.5220+dev.27 # Update this if update the agent
       addons:
       - name: datadog
         jobs:
