@@ -1,8 +1,7 @@
 import sys
 import json
-import re
 
-def clean_secret(secret, retain_last=False):
+def clean_secret(secret, retain_last=False, truncate_length=False):
     i = 0
     cleaned_secret = ''
     for c in secret:
@@ -10,7 +9,9 @@ def clean_secret(secret, retain_last=False):
             cleaned_secret += c
         else:
             cleaned_secret += '*'
-        i++
+        if i == 5 and truncate_length:
+            return cleaned_secret
+        i += 1
     return cleaned_secret
 
 def main():
@@ -23,7 +24,7 @@ def main():
         config_file = f.read()
 
     config_json = json.loads(config_file)
-    config_json['ClientSecret'] = clean_secret(config_json['ClientSecret'])
+    config_json['ClientSecret'] = clean_secret(config_json['ClientSecret'], truncate_length=True)
     config_json['DataDogAPIKey'] = clean_secret(config_json['DataDogAPIKey'], retain_last=True)
 
     with open(cleaned_conig_file_path, 'w') as f:

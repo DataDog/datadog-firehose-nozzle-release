@@ -8,7 +8,7 @@ RUN_DIR=$SYS_DIR/run/datadog-firehose-nozzle
 LOG_DIR=$SYS_DIR/log/datadog-firehose-nozzle
 TMP_DIR=$SYS_DIR/tmp/datadog-firehose-nozzle
 FLARE_DIR=$TMP_DIR/$HOSTNAME
-ZIPFILE=$TMP_DIR/nozzle-flare.zip
+ZIPFILE=$TMP_DIR/nozzle-flare-$(date +"%m-%d-%Y-%H-%M").zip
 PIDFILE=$RUN_DIR/datadog-firehose-nozzle.pid
 CONFIG_FILE=/var/vcap/jobs/datadog-firehose-nozzle/config/datadog-firehose-nozzle.json
 
@@ -61,3 +61,6 @@ curl -X POST \
 
 rm $ZIPFILE
 rm -rf $FLARE_DIR
+# in case curl does not print a newline, print one here
+echo ""
+echo "Finished uploading flare!"
