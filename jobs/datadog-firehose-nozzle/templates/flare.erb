@@ -1,7 +1,6 @@
 #!/bin/bash -e
 
 DATADOG_URL=<%= p("datadog.api_url") %>
-# DATADOG_URL=""
 HOSTNAME=$(cat /etc/hostname)
 SYS_DIR=/var/vcap/sys
 RUN_DIR=$SYS_DIR/run/datadog-firehose-nozzle
