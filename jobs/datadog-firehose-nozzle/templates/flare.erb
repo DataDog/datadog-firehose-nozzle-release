@@ -1,23 +1,26 @@
 #!/bin/bash -e
 
 DATADOG_URL=<%= p("datadog.api_url") %>
+# DATADOG_URL=""
+HOSTNAME=$(cat /etc/hostname)
 SYS_DIR=/var/vcap/sys
 RUN_DIR=$SYS_DIR/run/datadog-firehose-nozzle
 LOG_DIR=$SYS_DIR/log/datadog-firehose-nozzle
 TMP_DIR=$SYS_DIR/tmp/datadog-firehose-nozzle
-ZIPFILE=$TMP_DIR/flare.zip
+FLARE_DIR=$TMP_DIR/$HOSTNAME
+ZIPFILE=$TMP_DIR/nozzle-flare.zip
 PIDFILE=$RUN_DIR/datadog-firehose-nozzle.pid
 CONFIG_FILE=/var/vcap/jobs/datadog-firehose-nozzle/config/datadog-firehose-nozzle.json
 
 if [ -z ${1+x} ]; then
   echo "Please set the caseid as the first field and your email as the second"
   exit 1
-end
+fi
 
 if [ -z ${2+x} ]; then
   echo "Please set the caseid as the first field and your email as the second"
   exit 1
-end
+fi
 
 CASE_ID=$1
 EMAIL=$2
@@ -26,23 +29,35 @@ if [ -f $ZIPFILE ]; then
   rm $ZIPFILE
 fi
 
+rm -rf $FLARE_DIR
+mkdir -p $FLARE_DIR
+
 pushd $LOG_DIR
   for file in $(ls); do
-    zip -r $ZIPFILE $file
+    cp $file $FLARE_DIR
   done
 popd
 
-mkdir $TMP_DIR/config
+CLEAN_CONFIG_FILE=$FLARE_DIR/datadog-firehose-nozzle.json
 
-CLEAN_CONFIG_FILE=$TMP_DIR/config/datadog-firehose-nozzle.json
+python /var/vcap/jobs/datadog-firehose-nozzle/bin/clean_config.py $CONFIG_FILE $CLEAN_CONFIG_FILE
 
-pushd $TMP_DIR/config
-  python /var/vcap/jobs/datadog-firehose-nozzle/bin/clean_config.py $CONFIG_FILE $CLEAN_CONFIG_FILE
-  zip -r $ZIPFILE $CLEAN_CONFIG_FILE
+DATADOG_FLARE_URL=$(echo $DATADOG_URL | sed "s~/api/v1/series~/support/flare~")
+DATADOG_FLARE_URL=$(echo $DATADOG_FLARE_URL | sed "s~/api/v1/series/~/support/flare~")
+
+DATADOG_FLARE_URL="$DATADOG_FLARE_URL?api_key="<%= p("datadog.api_key") %>
+
+pushd $TMP_DIR
+  zip -r $ZIPFILE $HOSTNAME
 popd
 
-rm -rf $TMP_DIR/config
+curl -X POST \
+  -H "Content-Type: multipart/form-data" \
+  -F "case_id=$CASE_ID" \
+  -F "email=$EMAIL" \
+  -F "hostname=$HOSTNAME" \
+  -F "flare_file=@$ZIPFILE" \
+  $DATADOG_FLARE_URL
 
-FLARE_URL=$DATADOG_URL/support/flare/$CASE_ID
-
-curl -F "case_id=$CASE_ID" -F "email=$EMAIL" -F "flare_file=@$ZIPFILE" $FLARE_URL
+rm $ZIPFILE
+rm -rf $FLARE_DIR
