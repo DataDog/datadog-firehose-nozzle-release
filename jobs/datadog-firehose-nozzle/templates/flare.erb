@@ -61,10 +61,19 @@ curl -SL -X POST \
   -F "flare_file=@$ZIPFILE" \
   $DATADOG_FLARE_URL
 
+CURL_RESULT=$?
+
 # remove the temp files
 rm $ZIPFILE
 rm -rf $FLARE_DIR
 
 # in case curl does not print a newline, print one here
 echo ""
-echo "Finished uploading flare!"
+
+if [ "$CURL_RESULT" != "0" ]; then
+  echo "Failed to upload fail!"
+  exit 1
+else
+  echo "Finished uploading flare!"
+  exit 0
+fi
