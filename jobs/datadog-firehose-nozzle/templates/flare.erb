@@ -37,20 +37,23 @@ pushd $LOG_DIR
   done
 popd
 
+# clean up the config file
 CLEAN_CONFIG_FILE=$FLARE_DIR/datadog-firehose-nozzle.json
-
 python /var/vcap/jobs/datadog-firehose-nozzle/bin/clean_config.py $CONFIG_FILE $CLEAN_CONFIG_FILE
 
+# go into the directory so that the zip file is cleanly created
+# in other words: so the zip file won't unzip to var/vcap/sys/tmp/...
+pushd $TMP_DIR
+  zip -r $ZIPFILE $HOSTNAME
+popd
+
+# remove the /api path from the URL
 DATADOG_FLARE_URL=$(echo $DATADOG_URL | sed "s~/api/v1/series~/support/flare~")
 DATADOG_FLARE_URL=$(echo $DATADOG_FLARE_URL | sed "s~/api/v1/series/~/support/flare~")
 
 DATADOG_FLARE_URL="$DATADOG_FLARE_URL?api_key="<%= p("datadog.api_key") %>
 
-pushd $TMP_DIR
-  zip -r $ZIPFILE $HOSTNAME
-popd
-
-curl -X POST \
+curl -SL -X POST \
   -H "Content-Type: multipart/form-data" \
   -F "case_id=$CASE_ID" \
   -F "email=$EMAIL" \
@@ -58,8 +61,10 @@ curl -X POST \
   -F "flare_file=@$ZIPFILE" \
   $DATADOG_FLARE_URL
 
+# remove the temp files
 rm $ZIPFILE
 rm -rf $FLARE_DIR
+
 # in case curl does not print a newline, print one here
 echo ""
 echo "Finished uploading flare!"
