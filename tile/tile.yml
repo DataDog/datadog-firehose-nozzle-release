@@ -92,6 +92,11 @@ forms:
     label: Use UUID Hostname
     default: false
     description: By default we use a friendly hostname, this might cause problems with some setups. Set this to use the UUID instead. (In an environment where there are multiple hosts of the same type on different deployments or in different foundries, this will be necessary.) If dd.hostname is set, it will take precedence over the uuid hostname.
+  - name: use_friendly_hostname
+    type: boolean
+    label: Use Friendly Hostname
+    default: true
+    description: By default we use a friendly hostname, this might cause problems with some setups. If you set the UUID hostname to true, it will supercede this one. If you set both to false, the agent will detect the underlying hostname and use that instead.
   - name: process_agent_enabled
     label: Enable Process Agent
     type: boolean
@@ -253,7 +258,7 @@ runtime_configs:
     runtime_config:
       releases:
         - name: datadog-agent
-          version: 2.0.603 # Update this if update the agent
+          version: 2.1.603 # Update this if update the agent
       addons:
       - name: datadog
         jobs:
