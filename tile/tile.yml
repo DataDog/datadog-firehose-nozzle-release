@@ -77,6 +77,11 @@ forms:
     label: App Metrics Interval
     description: The interval at which to grab the app metrics
     default: 10
+  - name: flush_max_bytes
+    type: integer
+    label: Flush Max Bytes
+    description: The maximum number of bytes to send per POST request
+    default: 2097152
 
 - name: datadog-agent-config
   label: Datadog Agent Config
@@ -152,6 +157,16 @@ forms:
     default: '1'
     label: Forwarder Workers
     description: "The number of workers used by the forwarder. Please note each worker will open an outbound HTTP connection towards Datadog's metrics intake at every flush."
+  - name: ip_tag
+    label: IP Address Tag
+    type: boolean
+    default: true
+    description: Include a tag with the IP address of the VM
+  - name: address_tag
+    label: Address Tag
+    type: boolean
+    default: true
+    description: Include a tag with the address of the VM
 
 - name: cf-config
   label: Cloud Foundry Settings
@@ -209,6 +224,7 @@ packages:
           api_url: (( .properties.api_url.value ))/api/v1/series
           metric_prefix: (( .properties.metric_prefix.value ))
           custom_tags: (( .properties.tags.value ))
+          flush_max_bytes: (( properties.flush_max_bytes.value ))
         nozzle:
           insecure_ssl_skip_verify: (( .properties.insecure_ssl_skip_verify.value ))
           disable_access_control: (( .properties.disable_access_control.value ))
@@ -269,3 +285,5 @@ runtime_configs:
             enable_gohai: (( .properties.enable_gohai.value ))
             check_runners: (( .properties.check_runners.value ))
             forwarder_num_workers: (( .properties.forwarder_num_workers.value ))
+            ip_tag: (( properties.ip_tag.value ))
+            address_tag: (( properties.address_tag.value ))
