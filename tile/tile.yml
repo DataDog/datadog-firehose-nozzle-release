@@ -9,7 +9,7 @@ allow_paid_service_plans: false        # Allow paid service plans, default: fals
 stemcell_criteria:
   os: ubuntu-trusty
   requires_cpi: false
-  version: '3263'
+  version: '3468'
 
 properties:
 - name: author
@@ -237,7 +237,7 @@ runtime_configs:
     runtime_config:
       releases:
         - name: datadog-agent
-          version: 2.0.600 # Update this if update the agent
+          version: 2.0.603 # Update this if update the agent
       addons:
       - name: datadog
         jobs:
