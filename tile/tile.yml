@@ -267,7 +267,6 @@ forms:
   - name: disk_yaml_config
     label: Disk integration YAML configuration
     type: text
-    default: ""
     optional: true
     description: Paste here the YAML configuration of the disk integration.
 
