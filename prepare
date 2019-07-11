@@ -12,8 +12,12 @@ pushd src/datadog-firehose-nozzle/src/github.com/DataDog/datadog-firehose-nozzle
   # Set NOZZLE_VERSION to `local` in order to use the current files on disk
   # Useful for quick development iteration, no need to push to remote, just edit files on disk
   if [ $NOZZLE_VERSION != "local" ]; then
+    set -e
+    git submodule init src/datadog-firehose-nozzle
+    git submodule update
     git fetch --tags
     git checkout -f $NOZZLE_VERSION
+    set +e
   fi
   glide install
 popd
