@@ -1,12 +1,18 @@
 #!/usr/bin/env bash
 
+set -e
 ./prepare
+set +e
+
+VERSION_STRING=""
+if [[ ! -z $VERSION ]]; then
+  VERSION_STRING="--version=$VERSION"
+fi
+
 
 cp config/final.yml config/final.yml.bk
 cp config/final.yml.local config/final.yml
 
-bosh create release --final --force --with-tarball || bosh create-release --force --final --tarball=datadog-firehose-nozzle-release.tgz
+bosh create-release --force --final --tarball=datadog-firehose-nozzle-release.tgz $VERSION_STRING
 cp config/final.yml.bk config/final.yml
 rm config/final.yml.bk
-
-echo "Please upload these to the proper s3 bucket"
