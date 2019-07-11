@@ -75,18 +75,18 @@ fi
 bosh upload-blobs
 s3cmd setacl "s3://${BLOBS_BUCKET}" --acl-public --recursive
 
-# git commit it and then push it to the repo
-git add .
-git commit -m "release datadog firehose nozzle $VERSION"
-git push
-
-# cache the blobs
-mkdir -p ./archive
-cp -R $WORKING_DIR/blobstore archive/blobstore
-cp $WORKING_DIR/datadog-firehose-nozzle-release.tgz archive/datadog-firehose-nozzle-release.tgz
-
-# Upload the archive to the release bucket
 if [ ! "$DRY_RUN" = "true" ]; then
-    aws s3 cp datadog-firehose-nozzle-release.tgz s3://$RELEASE_BUCKET/datadog-firehose-nozzle-release-$VERSION.tgz --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers full=id=3a6e02b08553fd157ae3fb918945dd1eaae5a1aa818940381ef07a430cf25732
-    aws s3 cp datadog-firehose-nozzle-release.tgz s3://$RELEASE_BUCKET/datadog-firehose-nozzle-release-latest.tgz --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers full=id=3a6e02b08553fd157ae3fb918945dd1eaae5a1aa818940381ef07a430cf25732
+  # git commit it and then push it to the repo
+  git add .
+  git commit -m "release datadog firehose nozzle $VERSION"
+  git push
+
+  # cache the blobs
+  mkdir -p ./archive
+  cp -R $WORKING_DIR/blobstore archive/blobstore
+  cp $WORKING_DIR/datadog-firehose-nozzle-release.tgz archive/datadog-firehose-nozzle-release.tgz
+
+  # Upload the archive to the release bucket
+  aws s3 cp datadog-firehose-nozzle-release.tgz s3://$RELEASE_BUCKET/datadog-firehose-nozzle-release-$VERSION.tgz --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers full=id=3a6e02b08553fd157ae3fb918945dd1eaae5a1aa818940381ef07a430cf25732
+  aws s3 cp datadog-firehose-nozzle-release.tgz s3://$RELEASE_BUCKET/datadog-firehose-nozzle-release-latest.tgz --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers full=id=3a6e02b08553fd157ae3fb918945dd1eaae5a1aa818940381ef07a430cf25732
 fi
