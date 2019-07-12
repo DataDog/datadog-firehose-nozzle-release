@@ -49,13 +49,12 @@ cp $WORKING_DIR/config/final.yml.s3 $WORKING_DIR/config/final.yml
 echo '{"blobstore": {"options": {"credentials_source": "env_or_profile"}}}' > $WORKING_DIR/config/private.yml
 
 # make sure we're in the right directory
-cd $WORKING_DIR
 if [ ! -f $WORKING_DIR/config/private.yml ]; then
   echo '{}' > $WORKING_DIR/config/private.yml
 fi
 
 # run the prepare script
-./prepare
+$WORKING_DIR/scripts/prepare.sh
 bosh sync-blobs
 # release a dev version of the agent to ensure the cache is warm
 # (it's better to fail here than to fail when really attempting to release it)
@@ -70,23 +69,23 @@ if [ "$DRY_RUN" = "true" ]; then
 fi
 
 # finally, release the nozzle
-./release
+$WORKING_DIR/scripts/create-release.sh
 # make sure we upload the blobs
 bosh upload-blobs
 s3cmd setacl "s3://${BLOBS_BUCKET}" --acl-public --recursive
 
 if [ ! "$DRY_RUN" = "true" ]; then
   # git commit it and then push it to the repo
-  git add .
+  git add $WORKING_DIR
   git commit -m "release datadog firehose nozzle $VERSION"
   git push
 
   # cache the blobs
-  mkdir -p ./archive
-  cp -R $WORKING_DIR/blobstore archive/blobstore
-  cp $WORKING_DIR/datadog-firehose-nozzle-release.tgz archive/datadog-firehose-nozzle-release.tgz
+  mkdir -p $WORKING_DIR/archive
+  cp -R $WORKING_DIR/blobstore $WORKING_DIR/archive/blobstore
+  cp $WORKING_DIR/datadog-firehose-nozzle-release.tgz $WORKING_DIR/archive/datadog-firehose-nozzle-release.tgz
 
   # Upload the archive to the release bucket
-  aws s3 cp datadog-firehose-nozzle-release.tgz s3://$RELEASE_BUCKET/datadog-firehose-nozzle-release-$VERSION.tgz --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers full=id=3a6e02b08553fd157ae3fb918945dd1eaae5a1aa818940381ef07a430cf25732
-  aws s3 cp datadog-firehose-nozzle-release.tgz s3://$RELEASE_BUCKET/datadog-firehose-nozzle-release-latest.tgz --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers full=id=3a6e02b08553fd157ae3fb918945dd1eaae5a1aa818940381ef07a430cf25732
+  aws s3 cp $WORKING_DIR/datadog-firehose-nozzle-release.tgz s3://$RELEASE_BUCKET/datadog-firehose-nozzle-release-$VERSION.tgz --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers full=id=3a6e02b08553fd157ae3fb918945dd1eaae5a1aa818940381ef07a430cf25732
+  aws s3 cp $WORKING_DIR/datadog-firehose-nozzle-release.tgz s3://$RELEASE_BUCKET/datadog-firehose-nozzle-release-latest.tgz --grants read=uri=http://acs.amazonaws.com/groups/global/AllUsers full=id=3a6e02b08553fd157ae3fb918945dd1eaae5a1aa818940381ef07a430cf25732
 fi

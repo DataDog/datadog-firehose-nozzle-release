@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 set -e
-./prepare
+scripts/prepare.sh
 set +e
 
 VERSION_STRING=""
