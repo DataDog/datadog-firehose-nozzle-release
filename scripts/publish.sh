@@ -44,14 +44,8 @@ fi
 git config --global push.default simple
 git checkout $REPO_BRANCH
 
-# if it's production set the bucket to production
 cp $WORKING_DIR/config/final.yml.s3 $WORKING_DIR/config/final.yml
 echo '{"blobstore": {"options": {"credentials_source": "env_or_profile"}}}' > $WORKING_DIR/config/private.yml
-
-# make sure we're in the right directory
-if [ ! -f $WORKING_DIR/config/private.yml ]; then
-  echo '{}' > $WORKING_DIR/config/private.yml
-fi
 
 # run the prepare script
 $WORKING_DIR/scripts/prepare.sh
@@ -63,6 +57,7 @@ bosh create-release --force --name "datadog-firehose-nozzle"
 # if it's a dry run, then set the bucket to a local bucket
 # we have to make sure the cache is warm first
 if [ "$DRY_RUN" = "true" ]; then
+  cp $WORKING_DIR/config/final.yml.local $WORKING_DIR/config/final.yml
   echo '{}' > $WORKING_DIR/config/private.yml
   BLOBS_BUCKET=""
 else
