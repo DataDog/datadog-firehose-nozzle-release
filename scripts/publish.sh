@@ -63,16 +63,21 @@ bosh create-release --force --name "datadog-firehose-nozzle"
 # if it's a dry run, then set the bucket to a local bucket
 # we have to make sure the cache is warm first
 if [ "$DRY_RUN" = "true" ]; then
-  cp $WORKING_DIR/config/final.yml.s3.local $WORKING_DIR/config/final.yml
   echo '{}' > $WORKING_DIR/config/private.yml
   BLOBS_BUCKET=""
+else
+  cp $WORKING_DIR/config/final.yml.s3 $WORKING_DIR/config/final.yml
 fi
 
 # finally, release the nozzle
 $WORKING_DIR/scripts/create-release.sh
-# make sure we upload the blobs
-bosh upload-blobs
-s3cmd setacl "s3://${BLOBS_BUCKET}" --acl-public --recursive
+
+if [ ! "$DRY_RUN" = "true" ]; then
+  # make sure we upload the blobs
+  bosh upload-blobs
+  s3cmd setacl "s3://${BLOBS_BUCKET}" --acl-public --recursive
+  cp $WORKING_DIR/config/final.yml.s3.local $WORKING_DIR/config/final.yml
+fi
 
 if [ ! "$DRY_RUN" = "true" ]; then
   # git commit it and then push it to the repo
