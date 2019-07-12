@@ -13,9 +13,8 @@ NOZZLE_VERSION=${NOZZLE_VERSION:-$DEFAULT_NOZZLE_VERSION}
 # Useful for quick development iteration, no need to push to remote, just edit files on disk
 if [ $NOZZLE_VERSION != "local" ]; then
   set -e
-# Init the git submodule
-  git submodule init src/datadog-firehose-nozzle
-  git submodule update
+# Init and update the git submodule
+  git submodule update --init --recursive
   # Checkout the version tag
   pushd src/datadog-firehose-nozzle/src/github.com/DataDog/datadog-firehose-nozzle
     git fetch --tags
