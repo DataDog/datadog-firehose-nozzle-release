@@ -6,6 +6,7 @@ export PATH=$GOROOT/bin:$PATH
 cd datadog-firehose-nozzle
 
 export GOPATH=$PWD
+export GOCACHE=$PWD
 
 go install github.com/DataDog/datadog-firehose-nozzle
 cp -a $PWD/bin/datadog-firehose-nozzle ${BOSH_INSTALL_TARGET}
