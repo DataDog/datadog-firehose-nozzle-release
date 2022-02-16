@@ -1,0 +1,29 @@
+variables:
+    VERSION:
+      value: ""
+      description: "The version to release"
+    ARTIFACT_BUCKET:
+      value: "public-datadog-firehose-nozzle-blobs"
+      description: "Bucket where the generated artifacts (blobs) is stored"
+    RELEASE_BUCKET:
+      value: "cloudfoundry.datadoghq.com/datadog-firehose-nozzle"
+      description: "Bucket where the actual bosh release is be stored"
+    DRY_RUN:
+      value: "true"
+      description: "Set to true to do a dry run"
+    REPO_BRANCH:
+      value: "master"
+      description: "The branch to use"
+
+datadog-firehose-nozzle-release:
+  stage: deploy
+  image: 486234852809.dkr.ecr.us-east-1.amazonaws.com/ci/datadog-agent-builders/gitlab_agent_deploy:v6554890-8eae026
+  tags: ["runner:main"]
+  when: manual
+  script:
+    - curl -o go1.16.7.linux-amd64.tar.gz https://golang.org/dl/go1.16.7.linux-amd64.tar.gz -L
+    - tar -xzf go1.16.7.linux-amd64.tar.gz
+    - export PATH=$PATH:$(pwd)/go/bin
+    - export GOROOT=$(pwd)/go
+    - set +x
+    - ./scripts/publish.sh
