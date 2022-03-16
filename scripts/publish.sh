@@ -41,7 +41,24 @@ if [ ! -f "/usr/local/bin/bosh" ]; then
   export PATH="$WORKING_DIR/bin:$PATH"
 fi
 
+# get github credentials
+mkdir -p ~/.ssh
+aws ssm get-parameter --name ci.datadog-firehose-nozzle-release.ssh_private_key --with-decryption --query "Parameter.Value" --out text --region us-east-1 > ~/.ssh/id_rsa_github
+chmod 400 ~/.ssh/id_rsa_github
+
+# setup ssh key
+eval `ssh-agent -s`
+ssh-add ~/.ssh/id_rsa_github
+ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+
+# config git
+git config --global user.email "Robot-Github-IntegrationToolsandLibraries@datadoghq.com"
+git config --global user.name "robot-github-intg-tools"
+git remote set-url origin git@github.com:DataDog/datadog-firehose-nozzle-release.git
+
+
 git config --global push.default simple
+git fetch
 git checkout $REPO_BRANCH
 
 cp $WORKING_DIR/config/final.yml.s3 $WORKING_DIR/config/final.yml
