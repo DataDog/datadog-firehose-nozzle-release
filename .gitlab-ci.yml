@@ -7,7 +7,7 @@ variables:
       description: "Bucket where the generated artifacts (blobs) is stored"
     RELEASE_BUCKET:
       value: "cloudfoundry.datadoghq.com/datadog-firehose-nozzle"
-      description: "Bucket where the actual bosh release is be stored"
+      description: "Bucket where the actual nozzle release is be stored"
     DRY_RUN:
       value: "true"
       description: "Set to true to do a dry run"
