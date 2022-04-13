@@ -1,5 +1,9 @@
 # Changelog
 
+## 84 / 2022-04-13
+
+* [Added] Upgrade nozzle to 2.4.0.
+
 ## 83 / 2021-08-09
 
 * [Fixed] Fix broken 82 release built with outdated go version, resulting in inconsistent vendoring.
