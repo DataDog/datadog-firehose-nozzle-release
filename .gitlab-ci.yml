@@ -2,7 +2,7 @@ variables:
     VERSION:
       value: ""
       description: "The version to release"
-    ARTIFACT_BUCKET:
+    BLOBS_BUCKET:
       value: "public-datadog-firehose-nozzle-blobs"
       description: "Bucket where the generated artifacts (blobs) is stored"
     RELEASE_BUCKET:
