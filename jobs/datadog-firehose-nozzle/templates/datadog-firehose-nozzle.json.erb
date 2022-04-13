@@ -84,7 +84,10 @@ JSON.pretty_generate(
     "EnvironmentName" => p("nozzle.environment", ""),
     "EnableMetadataCollection" => p("nozzle.enable_metadata_collection", false),
     "MetadataKeysWhitelistPatterns" => metadata_keys_whitelist_patterns,
-    "MetadataKeysBlacklistPatterns" => metadata_keys_blacklist_patterns
+    "MetadataKeysBlacklistPatterns" => metadata_keys_blacklist_patterns,
+    "DCAEnabled" => p("nozzle.dca_enabled", false),
+    "DCAUrl"=>  p("nozzle.dca_url", "")
+    "DCAToken" => p("nozzle.dca_token", "")
 )
 
 %>
