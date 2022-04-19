@@ -48,6 +48,11 @@
   if p("loggregator", nil) && p("loggregator.rlp_gateway_url", nil)
     rlp_gateway_url = p("loggregator.rlp_gateway_url", "")
   end
+
+  dca_full_url = ""
+  if p("nozzle.dca_url") && p("nozzle.dca_port")
+    dca_full_url = p("nozzle.dca_url") + ":" + p("nozzle.dca_port")
+  end
 %>
 
 <%=
@@ -84,7 +89,10 @@ JSON.pretty_generate(
     "EnvironmentName" => p("nozzle.environment", ""),
     "EnableMetadataCollection" => p("nozzle.enable_metadata_collection", false),
     "MetadataKeysWhitelistPatterns" => metadata_keys_whitelist_patterns,
-    "MetadataKeysBlacklistPatterns" => metadata_keys_blacklist_patterns
+    "MetadataKeysBlacklistPatterns" => metadata_keys_blacklist_patterns,
+    "DCAEnabled" => p("nozzle.dca_enabled", false),
+    "DCAUrl"=>  dca_full_url,
+    "DCAToken" => p("nozzle.dca_token", "")
 )
 
 %>

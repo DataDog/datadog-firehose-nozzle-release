@@ -138,3 +138,13 @@ properties:
       If neither a whitelist nor a blacklist is provided, everything is included.
       If a key matches both a whitelist and a blacklist pattern, it is excluded.
     default: []
+  nozzle.dca_enabled:
+    default: false
+    description: Whether or not to use the cluster agent API.
+  nozzle.dca_token:
+    description: Token to connect to the cluster agent.
+  nozzle.dca_url:
+    description: URL of the cluster agent.
+  nozzle.dca_port:
+    default: 5005
+    description: Port to connect to the cluster agent.
