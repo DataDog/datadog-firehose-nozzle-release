@@ -51,7 +51,7 @@
 
   dca_full_url = ""
   if p("nozzle.dca_url") && p("nozzle.dca_port")
-    dca_full_url = p("nozzle.dca_url") + ":" + p("nozzle.dca_port")
+    dca_full_url = "#{p("nozzle.dca_url")}:#{p("nozzle.dca_port")}"
   end
 %>
 
