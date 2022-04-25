@@ -148,3 +148,6 @@ properties:
   nozzle.dca_port:
     default: 5005
     description: Port to connect to the cluster agent.
+  nozzle.enable_advanced_tagging:
+    default: false
+    description: Wheter or not to send extra tags such as `sidecar_present` and `sidecar_count` for app metrics.
