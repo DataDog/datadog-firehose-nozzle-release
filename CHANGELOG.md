@@ -1,5 +1,10 @@
 # Changelog
 
+## 85 / 2022-04-25
+
+* [Added] Add option to enable advanced tagging. See [#113](https://github.com/DataDog/datadog-firehose-nozzle-release/pull/113).
+* [Added] Add configuration values for the DCA properties. See [#110](https://github.com/DataDog/datadog-firehose-nozzle-release/pull/110).
+
 ## 84 / 2022-04-13
 
 * [Added] Upgrade nozzle to 2.4.0.
