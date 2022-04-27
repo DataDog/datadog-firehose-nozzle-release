@@ -2,12 +2,13 @@
 
 ## 85 / 2022-04-25
 
+* [Added] Upgrade nozzle to 2.4.1. Read more about it [here](https://github.com/DataDog/datadog-firehose-nozzle/releases/tag/2.4.1).
 * [Added] Add option to enable advanced tagging. See [#113](https://github.com/DataDog/datadog-firehose-nozzle-release/pull/113).
 * [Added] Add configuration values for the DCA properties. See [#110](https://github.com/DataDog/datadog-firehose-nozzle-release/pull/110).
 
 ## 84 / 2022-04-13
 
-* [Added] Upgrade nozzle to 2.4.0.
+* [Added] Upgrade nozzle to 2.4.0. Read more about it [here](https://github.com/DataDog/datadog-firehose-nozzle/releases/tag/2.4.0).
 
 ## 83 / 2021-08-09
 
