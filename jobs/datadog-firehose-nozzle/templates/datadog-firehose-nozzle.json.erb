@@ -44,6 +44,14 @@
     end
   end
 
+  datadog_additional_log_intake_endpoints = []
+  for i in 1..5 do
+    additional_log_intake_url = p("datadog.additional_log_intake_url_#{i}", "")
+    if !additional_log_intake_url.empty?
+      datadog_additional_log_intake_endpoints.append(additional_log_intake_url)
+    end
+  end
+
   rlp_gateway_url = ""
   if p("loggregator", nil) && p("loggregator.rlp_gateway_url", nil)
     rlp_gateway_url = p("loggregator.rlp_gateway_url", "")
@@ -64,8 +72,10 @@ JSON.pretty_generate(
     "RLPGatewayURL" => rlp_gateway_url,
     "FirehoseSubscriptionID" => p("nozzle.subscription_id"),
     "DataDogURL" => p("datadog.api_url"),
+    "DataDogLogIntakeURL" => p("datadog.log_url"),
     "DataDogAPIKey" => p("datadog.api_key", ""),
     "DataDogAdditionalEndpoints" => datadog_additional_endpoints,
+    "DataDogAdditionalLogIntakeEndpoints" => datadog_additional_log_intake_endpoints,
     "DataDogTimeoutSeconds" => p("datadog.timeout_seconds"),
     "FlushDurationSeconds" => p("datadog.flush_duration_seconds"),
     "FlushMaxBytes" => p("datadog.flush_max_bytes"),
