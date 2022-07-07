@@ -20,7 +20,7 @@ jobs:
 properties:
   datadog:
     api_key: aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-    api_url: https://app.datadoghq.com/api/v1/series
+    api_url: https://api.datadoghq.com/api/v1/series
     flush_duration_seconds: 15
     metric_prefix: cf.nozzle.
   loggregator:
