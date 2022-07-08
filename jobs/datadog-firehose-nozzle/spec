@@ -25,7 +25,7 @@ properties:
     description: "The datadog API key to use while submitting requests"
   datadog.additional_api_url_1:
     description: "Additional Endpoint URL 1 for datadog"
-    default: "https://api.datadoghq.com/api/v1/series"
+    default: "https://app.datadoghq.com/api/v1/series"
   datadog.additional_api_key_1:
     description: "The datadog API key to use while submitting requests for additional endpoint url 1"
   datadog.additional_log_intake_url_1:
@@ -33,7 +33,7 @@ properties:
     default: ""
   datadog.additional_api_url_2:
     description: "Additional Endpoint URL 2 for datadog"
-    default: "https://api.datadoghq.com/api/v1/series"
+    default: "https://app.datadoghq.com/api/v1/series"
   datadog.additional_api_key_2:
     description: "The datadog API key to use while submitting requests for additional endpoint url 2"
   datadog.additional_log_intake_url_2:
@@ -41,7 +41,7 @@ properties:
     default: ""
   datadog.additional_api_url_3:
     description: "Additional Endpoint URL 3 for datadog"
-    default: "https://api.datadoghq.com/api/v1/series"
+    default: "https://app.datadoghq.com/api/v1/series"
   datadog.additional_api_key_3:
     description: "The datadog API key to use while submitting requests for additional endpoint url 3"
   datadog.additional_log_intake_url_3:
@@ -49,7 +49,7 @@ properties:
     default: ""
   datadog.additional_api_url_4:
     description: "Additional Endpoint URL 4 for datadog"
-    default: "https://api.datadoghq.com/api/v1/series"
+    default: "https://app.datadoghq.com/api/v1/series"
   datadog.additional_api_key_4:
     description: "The datadog API key to use while submitting requests for additional endpoint url 4"
   datadog.additional_log_intake_url_4:
@@ -57,7 +57,7 @@ properties:
     default: ""
   datadog.additional_api_url_5:
     description: "Additional Endpoint URL 5 for datadog"
-    default: "https://api.datadoghq.com/api/v1/series"
+    default: "https://app.datadoghq.com/api/v1/series"
   datadog.additional_api_key_5:
     description: "The datadog API key to use while submitting requests for additional endpoint url 5"
   datadog.additional_log_intake_url_5:
@@ -143,6 +143,9 @@ properties:
     default: ""
   nozzle.enable_metadata_collection:
     description: "Whether or not to enable labels and annotations collection as tags"
+    default: false
+  nozzle.enable_application_logs:
+    description: "Whether or not to enable forwarding application logs from the nozzle"
     default: false
   nozzle.metadata_keys_whitelist_patterns:
     description: |

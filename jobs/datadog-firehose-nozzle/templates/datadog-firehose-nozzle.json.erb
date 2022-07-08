@@ -98,6 +98,7 @@ JSON.pretty_generate(
     "DBPath" => "/var/vcap/sys/tmp/datadog-firehose-nozzle/firehose_nozzle.db",
     "EnvironmentName" => p("nozzle.environment", ""),
     "EnableMetadataCollection" => p("nozzle.enable_metadata_collection", false),
+    "EnableApplicationLogs" => p("nozzle.enable_application_logs", false),
     "MetadataKeysWhitelistPatterns" => metadata_keys_whitelist_patterns,
     "MetadataKeysBlacklistPatterns" => metadata_keys_blacklist_patterns,
     "DCAEnabled" => p("nozzle.dca_enabled", false),
