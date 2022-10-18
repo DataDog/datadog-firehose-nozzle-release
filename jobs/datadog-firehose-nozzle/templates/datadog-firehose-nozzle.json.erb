@@ -72,7 +72,7 @@ JSON.pretty_generate(
     "HTTPProxyURL" => p("nozzle.http_proxy_url", ""),
     "HTTPSProxyURL" => p("nozzle.https_proxy_url", ""),
     "NoProxy" => no_proxy,
-    "InsecureSSLSkipVerify" => p("nozzle.insecure_ssl_skip_verify"),
+    "InsecureSSLSkipVerify" => p("nozzle.insecure_ssl_skip_verify") && !p("nozzle.dca_enabled", false),
     "MetricPrefix" => p("datadog.metric_prefix"),
     "Deployment" => p("nozzle.deployment"),
     "IdleTimeoutSeconds" => p("nozzle.idle_timeout_seconds"),
