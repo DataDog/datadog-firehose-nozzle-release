@@ -151,3 +151,6 @@ properties:
   nozzle.enable_advanced_tagging:
     default: false
     description: Wheter or not to send extra tags such as `sidecar_present` and `sidecar_count` for app metrics.
+  nozzle.enable_metadata_app_metrics_prefix:
+    default: true
+    description: Wheter or not to add "label/" or "annotation/" prefix to app metadata tags in app metrics.
