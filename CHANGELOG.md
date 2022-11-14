@@ -1,5 +1,11 @@
 # Changelog
 
+## 86 / 2022-11-14
+
+* [Added] Upgrade nozzle to 2.5.0. Read more about it [here](https://github.com/DataDog/datadog-firehose-nozzle/releases/tag/2.5.0).
+* [Added] Add option to enable/disable app metadata prefix in app metrics. See [#116](https://github.com/DataDog/datadog-firehose-nozzle-release/pull/116).
+* [Fixed] Fix `org_data_collection_interval` property name. See [#117](https://github.com/DataDog/datadog-firehose-nozzle-release/pull/117).
+
 ## 85 / 2022-04-25
 
 * [Added] Upgrade nozzle to 2.4.1. Read more about it [here](https://github.com/DataDog/datadog-firehose-nozzle/releases/tag/2.4.1).
