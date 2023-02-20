@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 
-DEFAULT_NOZZLE_VERSION=2.5.0
-
-NOZZLE_VERSION=${NOZZLE_VERSION:-$DEFAULT_NOZZLE_VERSION}
+NOZZLE_VERSION=${NOZZLE_VERSION:-2.5.0}
 
 # Set NOZZLE_VERSION to `local` in order to use the current files on disk
 # Useful for quick development iteration, no need to push to remote, just edit files on disk
