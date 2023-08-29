@@ -142,8 +142,10 @@ properties:
     default: false
     description: Whether or not to use the cluster agent API.
   nozzle.dca_token:
+    default: ""
     description: Token to connect to the cluster agent.
   nozzle.dca_url:
+    default: ""
     description: URL of the cluster agent.
   nozzle.dca_port:
     default: 5005
