@@ -53,6 +53,10 @@
   if p("nozzle.dca_url") && p("nozzle.dca_port")
     dca_full_url = "#{p("nozzle.dca_url")}:#{p("nozzle.dca_port")}"
   end
+  
+  if !dca_full_url.start_with?('http://', 'https://')
+    dca_full_url = "https://#{dca_full_url}"
+  end
 %>
 
 <%=
