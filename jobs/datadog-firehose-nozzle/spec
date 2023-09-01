@@ -146,7 +146,7 @@ properties:
     description: Token to connect to the cluster agent.
   nozzle.dca_url:
     default: ""
-    description: URL of the cluster agent.
+    description: URL of the cluster agent, the scheme will be added automatically in case it is not included.
   nozzle.dca_port:
     default: 5005
     description: Port to connect to the cluster agent.
