@@ -146,7 +146,7 @@ properties:
     default: false
   nozzle.enable_application_logs:
     description: "Whether or not to enable forwarding application logs from the nozzle"
-    default: false
+    default: true
   nozzle.metadata_keys_whitelist_patterns:
     description: |
       Label and annotation keys that match any regular expression in this list are included.
