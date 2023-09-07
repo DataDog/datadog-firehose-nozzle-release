@@ -20,7 +20,7 @@ properties:
     default: "https://api.datadoghq.com/api/v1/series"
   datadog.log_intake_url:
     description: "The REST Log Intake Endpoint for datadog"
-    default: ""
+    default: "https://http-intake.logs.datadoghq.com/"
   datadog.api_key:
     description: "The datadog API key to use while submitting requests"
   datadog.additional_api_url_1:
