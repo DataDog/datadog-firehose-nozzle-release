@@ -1,5 +1,5 @@
 ---
-name: golang1.16
+name: golang1.21.3
 
 files:
-    - golang/go1.16.7.linux-amd64.tar.gz
+    - golang/go1.21.3.linux-amd64.tar.gz

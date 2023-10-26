@@ -21,8 +21,8 @@ datadog-firehose-nozzle-release:
   tags: ["runner:main"]
   when: manual
   script:
-    - 'curl -o go1.16.7.linux-amd64.tar.gz https://golang.org/dl/go1.16.7.linux-amd64.tar.gz -L'
-    - 'tar -xzf go1.16.7.linux-amd64.tar.gz'
+    - 'curl -o go1.21.3.linux-amd64.tar.gz https://golang.org/dl/go1.21.3.linux-amd64.tar.gz -L'
+    - 'tar -xzf go1.21.3.linux-amd64.tar.gz'
     - 'export PATH=$PATH:$(pwd)/go/bin'
     - 'export GOROOT=$(pwd)/go'
     - set +x
