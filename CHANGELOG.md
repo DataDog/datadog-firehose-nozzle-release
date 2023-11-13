@@ -4,10 +4,10 @@
 ## 86 / 2023-11-13
 
 * [Added] Upgrade nozzle to 2.7.0. Read more about it [here](https://github.com/DataDog/datadog-firehose-nozzle/releases/tag/2.7.0).
-* [Added] Upgrade go to 1.21.3. See [#125](https://github.com/DataDog/datadog-firehose-nozzle-release/pull/125)
-* [Added] Add properties for the application logs collection feature. See [#124](https://github.com/DataDog/datadog-firehose-nozzle-release/pull/124)
-* [Added] Add scheme prefix handling for the property `nozzle.dca_url`. See [#123](https://github.com/DataDog/datadog-firehose-nozzle-release/pull/123)
-* [Added] Make `nozzle.dca_url` and `nozzle.dca_token` properties optional. See [#122] (https://github.com/DataDog/datadog-firehose-nozzle-release/pull/122)
+* [Added] Upgrade go to 1.21.3. See [#125](https://github.com/DataDog/datadog-firehose-nozzle-release/pull/125).
+* [Added] Add properties for the application logs collection feature. See [#124](https://github.com/DataDog/datadog-firehose-nozzle-release/pull/124).
+* [Added] Add scheme prefix handling for the property `nozzle.dca_url`. See [#123](https://github.com/DataDog/datadog-firehose-nozzle-release/pull/123).
+* [Added] Make `nozzle.dca_url` and `nozzle.dca_token` properties optional. See [#122](https://github.com/DataDog/datadog-firehose-nozzle-release/pull/122).
 
 ## 86 / 2022-11-14
 
