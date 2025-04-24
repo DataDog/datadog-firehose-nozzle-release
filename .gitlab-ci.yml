@@ -17,7 +17,7 @@ variables:
 
 datadog-firehose-nozzle-release:
   stage: deploy
-  image: 486234852809.dkr.ecr.us-east-1.amazonaws.com/ci/datadog-agent-builders/gitlab_agent_deploy:v6554890-8eae026
+  image: registry.ddbuild.io/ci/datadog-agent-buildimages/gitlab_agent_deploy:v48815877-9bfad02c
   tags: ["runner:main"]
   when: manual
   script:
