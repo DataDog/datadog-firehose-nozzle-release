@@ -1,5 +1,9 @@
 # Changelog
 
+## 88 / 2025-04-24
+
+* [Added] Upgrade nozzle to 2.9.0. Read more about it [here](https://github.com/DataDog/datadog-firehose-nozzle/releases/tag/2.9.0).
+* [Added] Upgrade go to 1.24.2. See [#131](https://github.com/DataDog/datadog-firehose-nozzle-release/pull/131).
 
 ## 87 / 2023-11-13
 
