@@ -27,3 +27,71 @@ datadog-firehose-nozzle-release:
     - "export GOROOT=$(pwd)/go"
     - set +x
     - ./scripts/publish.sh
+
+update_go_version:
+  stage: update-go
+  image: bosh/bosh-cli:latest
+  variables:
+    TARBALL_NAME: "go${GO_VERSION}.linux-amd64.tar.gz"
+    TARBALL_URL: "https://go.dev/dl/go${GO_VERSION}.linux-amd64.tar.gz"
+    BLOB_PATH: "golang/${TARBALL_NAME}"
+    PACKAGE_NAME: "golang${GO_VERSION}"
+  script:
+    - |
+      if [ -z "$GO_VERSION" ]; then
+        echo "❌ GO_VERSION must be provided as a CI variable (e.g., 1.24.2)"
+        exit 1
+      fi
+
+    - echo "🧹 Cleaning up existing Go packages"
+    - |
+      for pkg in packages/golang*; do
+        if [ -d "$pkg" ] && [[ "$pkg" != "packages/${PACKAGE_NAME}" ]]; then
+          echo "Removing package dir: $pkg"
+          rm -rf "$pkg"
+        fi
+      done
+
+    - echo "🔍 Removing old Go blobs via bosh remove-blob"
+    - |
+      if bosh blobs | grep -q 'golang/go'; then
+        for blob in $(bosh blobs | grep 'golang/go' | awk '{print $1}'); do
+          if [[ "$blob" != "$BLOB_PATH" ]]; then
+            echo "Removing blob: $blob"
+            bosh remove-blob "$blob"
+          fi
+        done
+      else
+        echo "No old Go blobs found."
+      fi
+
+    - echo "⬇️ Downloading Go tarball: $TARBALL_URL"
+    - curl -fsSL "$TARBALL_URL" -o "/tmp/${TARBALL_NAME}"
+
+    - echo "📦 Creating package directory: packages/${PACKAGE_NAME}"
+    - mkdir -p "packages/${PACKAGE_NAME}"
+
+    - echo "📝 Writing spec to packages/${PACKAGE_NAME}/spec"
+    - cat > "packages/${PACKAGE_NAME}/spec" <<EOF
+---
+name: ${PACKAGE_NAME}
+
+files:
+- ${BLOB_PATH}
+EOF
+
+    - echo "➕ Adding blob to release: ${BLOB_PATH}"
+    - bosh add-blob "/tmp/${TARBALL_NAME}" "${BLOB_PATH}"
+
+    - echo "🔄 Syncing blobs from blobstore"
+    - bosh sync-blobs
+
+    - echo "📤 Uploading blobs to blobstore"
+    - bosh upload-blobs
+
+    - echo "🧪 Validating release creation"
+    - bosh create-release --force --tarball="datadog-firehose-nozzle.tgz"
+
+  rules:
+    - if: '$GO_VERSION'
+      when: always
