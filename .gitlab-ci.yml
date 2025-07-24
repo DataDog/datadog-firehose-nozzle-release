@@ -14,6 +14,9 @@ variables:
   REPO_BRANCH:
     value: 'master'
     description: 'The branch to use'
+  GO_VERSION:
+    value: '1.24.4'
+    description: 'The Go version to upgrade to'
 
 datadog-firehose-nozzle-release:
   stage: deploy
@@ -28,7 +31,7 @@ datadog-firehose-nozzle-release:
     - set +x
     - ./scripts/publish.sh
 
-update_go_version:
+update-go-version:
   stage: deploy
   image: registry.ddbuild.io/ci/datadog-agent-buildimages/gitlab_agent_deploy:v48815877-9bfad02c
   tags: ['runner:main']
