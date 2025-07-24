@@ -47,7 +47,7 @@ update-go-version:
         echo "❌ GO_VERSION must be provided as a CI variable (e.g., 1.24.2)"
         exit 1
       fi
-    
+
     - export WORKING_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
     - echo "Installing bosh CLI"
     - apt-get update && apt-get install -y curl unzip
@@ -92,6 +92,14 @@ update-go-version:
 
       files:
       - ${BLOB_PATH}
+      EOF
+    - echo "Writing packaging to packages/${PACKAGE_NAME}/packaging"
+    - |
+      cat > "packages/${PACKAGE_NAME}/packaging" <<EOF
+      set -e
+
+      tar xzf ${TARBALL_NAME}
+      cp -R go/* ${BOSH_INSTALL_TARGET}
       EOF
 
     - cp $WORKING_DIR/config/final.yml.s3 $WORKING_DIR/config/final.yml
