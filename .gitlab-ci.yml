@@ -15,8 +15,8 @@ variables:
     value: 'master'
     description: 'The branch to use'
   GO_VERSION:
-    value: '1.24.4'
-    description: 'The Go version to upgrade to'
+    value: ''
+    description: 'The Go version to upgrade to (e.g. 1.24.4)'
 
 datadog-firehose-nozzle-release:
   stage: deploy
