@@ -29,7 +29,7 @@ datadog-firehose-nozzle-release:
     - ./scripts/publish.sh
 
 update_go_version:
-  stage: update-go
+  stage: deploy
   image: registry.ddbuild.io/ci/datadog-agent-buildimages/gitlab_agent_deploy:v48815877-9bfad02c
   tags: ['runner:main']
   when: manual
@@ -76,9 +76,9 @@ update_go_version:
       else
         echo "No old Go blobs found."
       fi
-    - echo "Downloading Go tarball: ${TARBALL_URL}"
+    - echo "Downloading Go tarball ${TARBALL_URL}"
     - curl -fsSL "${TARBALL_URL}" -o "/tmp/${TARBALL_NAME}"
-    - echo "Creating package directory: packages/${PACKAGE_NAME}"
+    - echo "Creating package directory - packages/${PACKAGE_NAME}"
     - mkdir -p "packages/${PACKAGE_NAME}"
     - echo "Writing spec to packages/${PACKAGE_NAME}/spec"
     - |
@@ -89,7 +89,7 @@ update_go_version:
       files:
       - ${BLOB_PATH}
       EOF
-    - echo "Adding blob to release: ${BLOB_PATH}"
+    - echo "Adding blob to release - ${BLOB_PATH}"
     - bosh add-blob "/tmp/${TARBALL_NAME}" "${BLOB_PATH}"
     - echo "Syncing blobs from blobstore"
     - bosh sync-blobs
@@ -97,7 +97,7 @@ update_go_version:
     - bosh upload-blobs
     - echo "Validating release creation"
     - bosh create-release --force --tarball="datadog-firehose-nozzle.tgz"
-    - echo "Comitting changes to the target branch: ${TARGET_BRANCH}"
+    - echo "Comitting changes to the target branch ${TARGET_BRANCH}"
     - mkdir -p ~/.ssh
     - aws ssm get-parameter --name ci.datadog-firehose-nozzle-release.ssh_private_key --with-decryption --query "Parameter.Value" --out text --region us-east-1 > ~/.ssh/id_rsa_github
     - chmod 400 ~/.ssh/id_rsa_github
@@ -109,7 +109,7 @@ update_go_version:
     - git config --global user.email "Robot-Github-IntegrationToolsandLibraries@datadoghq.com"
     - git config --global user.name "robot-github-intg-tools"
     - git remote set-url origin git@github.com:DataDog/datadog-firehose-nozzle-release.git
-    - echo "Committing changes to the target branch: ${TARGET_BRANCH}"
+    - echo "Committing changes to the target branch ${TARGET_BRANCH}"
     - git add $WORKING_DIR
     - git commit -m "release datadog firehose nozzle $VERSION"
     - git push
