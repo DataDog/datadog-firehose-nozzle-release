@@ -93,8 +93,6 @@ update-go-version:
       files:
       - ${BLOB_PATH}
       EOF
-    - echo "Adding blob to release - ${BLOB_PATH}"
-    - bosh add-blob "/tmp/${TARBALL_NAME}" "${BLOB_PATH}"
 
     - cp $WORKING_DIR/config/final.yml.s3 $WORKING_DIR/config/final.yml
     - |
@@ -107,8 +105,10 @@ update-go-version:
         }
       }
       EOF
-    - echo "Syncing blobs from blobstore"
-    - bosh sync-blobs
+    - echo "Running prepare.sh script"
+    - $WORKING_DIR/scripts/prepare.sh
+    - echo "Adding blob to release - ${BLOB_PATH}"
+    - bosh add-blob "/tmp/${TARBALL_NAME}" "${BLOB_PATH}"
     - echo "Uploading blobs to blobstore"
     - bosh upload-blobs
     - echo "Validating release creation"
