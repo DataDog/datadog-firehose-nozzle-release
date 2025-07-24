@@ -50,7 +50,7 @@ update-go-version:
 
     - echo "Installing bosh CLI"
     - apt-get update && apt-get install -y curl unzip
-    - curl -L -o bosh https://github.com/cloudfoundry/bosh-cli/releases/latest/download/bosh-cli-7.1.1-linux-amd64
+    - curl -L -o bosh https://github.com/cloudfoundry/bosh-cli/releases/download/v7.9.7/bosh-cli-7.9.7-linux-amd64
     - chmod +x bosh
     - mv bosh /usr/local/bin/bosh
     - bosh --version
