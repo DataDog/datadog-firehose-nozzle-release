@@ -119,6 +119,21 @@ update-go-version:
     - bosh add-blob "/tmp/${TARBALL_NAME}" "${BLOB_PATH}"
     - echo "Uploading blobs to blobstore"
     - bosh upload-blobs
+
+    - echo "Updating packages/datadog-firehose-nozzle/spec to use ${PACKAGE_NAME}"
+    - |
+      cat > "packages/datadog-firehose-nozzle/spec" <<EOF
+      ---
+      name: datadog-firehose-nozzle
+
+      dependencies:
+      - ${PACKAGE_NAME}
+
+      files:
+      - datadog-firehose-nozzle/**/*
+
+      EOF
+
     - echo "Validating release creation"
     - bosh create-release --force --tarball="datadog-firehose-nozzle.tgz"
     - echo "Comitting changes to the target branch ${TARGET_BRANCH}"
