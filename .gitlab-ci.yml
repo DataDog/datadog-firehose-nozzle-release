@@ -47,7 +47,9 @@ update-go-version:
         echo "❌ GO_VERSION must be provided as a CI variable (e.g., 1.24.2)"
         exit 1
       fi
-
+    
+    - export DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+    - export WORKING_DIR="$DIR/.."
     - echo "Installing bosh CLI"
     - apt-get update && apt-get install -y curl unzip
     - curl -L -o bosh https://github.com/cloudfoundry/bosh-cli/releases/download/v7.9.7/bosh-cli-7.9.7-linux-amd64
@@ -94,6 +96,9 @@ update-go-version:
       EOF
     - echo "Adding blob to release - ${BLOB_PATH}"
     - bosh add-blob "/tmp/${TARBALL_NAME}" "${BLOB_PATH}"
+
+    - cp $WORKING_DIR/config/final.yml.s3 $WORKING_DIR/config/final.yml
+    - echo '{"blobstore": {"options": {"credentials_source": "env_or_profile"}}}' > $WORKING_DIR/config/private.yml
     - echo "Syncing blobs from blobstore"
     - bosh sync-blobs
     - echo "Uploading blobs to blobstore"
