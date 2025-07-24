@@ -98,7 +98,16 @@ update-go-version:
     - bosh add-blob "/tmp/${TARBALL_NAME}" "${BLOB_PATH}"
 
     - cp $WORKING_DIR/config/final.yml.s3 $WORKING_DIR/config/final.yml
-    - echo '{"blobstore": {"options": {"credentials_source": "env_or_profile"}}}' > $WORKING_DIR/config/private.yml
+    - |
+      cat > "$WORKING_DIR/config/private.yml" <<EOF
+      {
+        "blobstore": {
+          "options": {
+            "credentials_source": "env_or_profile"
+          }
+        }
+      }
+      EOF
     - echo "Syncing blobs from blobstore"
     - bosh sync-blobs
     - echo "Uploading blobs to blobstore"
