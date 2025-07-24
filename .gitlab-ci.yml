@@ -48,8 +48,7 @@ update-go-version:
         exit 1
       fi
     
-    - export DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
-    - export WORKING_DIR="$DIR/.."
+    - export WORKING_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
     - echo "Installing bosh CLI"
     - apt-get update && apt-get install -y curl unzip
     - curl -L -o bosh https://github.com/cloudfoundry/bosh-cli/releases/download/v7.9.7/bosh-cli-7.9.7-linux-amd64
