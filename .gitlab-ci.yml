@@ -150,7 +150,7 @@ update-go-version:
     - git remote set-url origin git@github.com:DataDog/datadog-firehose-nozzle-release.git
     - echo "Committing changes to the target branch ${TARGET_BRANCH}"
     - git add $WORKING_DIR
-    - git commit -m "release datadog firehose nozzle $VERSION"
+    - git commit -m "upgrading go to ${GO_VERSION}"
     - git push
 
   rules:
