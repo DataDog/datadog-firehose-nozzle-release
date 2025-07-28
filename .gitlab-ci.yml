@@ -99,7 +99,7 @@ update-go-version:
       set -e
 
       tar xzf ${TARBALL_NAME}
-      cp -R go/* ${BOSH_INSTALL_TARGET}
+      cp -R go/* '${BOSH_INSTALL_TARGET}'
       EOF
 
     - cp $WORKING_DIR/config/final.yml.s3 $WORKING_DIR/config/final.yml
