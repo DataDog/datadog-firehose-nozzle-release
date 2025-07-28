@@ -1,4 +1,4 @@
 set -e
 
 tar xzf go1.24.4.linux-amd64.tar.gz
-cp -R go/* ''
+cp -R go/* ${BOSH_INSTALL_TARGET}
