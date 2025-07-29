@@ -98,7 +98,7 @@ update-go-version:
       cat > "packages/${PACKAGE_NAME}/packaging" <<EOF
       set -e
 
-      tar xzf ${TARBALL_NAME}
+      tar xzf golang/${TARBALL_NAME}
       cp -R go/* \${BOSH_INSTALL_TARGET}
       EOF
 
