@@ -136,7 +136,7 @@ update-go-version:
 
     - echo "Updating packages/datadog-firehose-nozzle/packaging to use ${PACKAGE_NAME}"
     - |
-      cat > "packages/datadog-firehose-nozzle/packaging" <<'EOF'
+      cat > "packages/datadog-firehose-nozzle/packaging" <<EOF
       set -e -x
 
       export GOROOT=\$(readlink -nf /var/vcap/packages/${PACKAGE_NAME})
