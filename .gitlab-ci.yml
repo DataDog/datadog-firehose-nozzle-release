@@ -134,6 +134,25 @@ update-go-version:
 
       EOF
 
+    - echo "Updating packages/datadog-firehose-nozzle/packaging to use ${PACKAGE_NAME}"
+    - |
+      cat > "packages/datadog-firehose-nozzle/packaging" <<'EOF'
+      set -e -x
+
+      export GOROOT=\$(readlink -nf /var/vcap/packages/${PACKAGE_NAME})
+      export PATH=\$GOROOT/bin:\$PATH
+
+      cd datadog-firehose-nozzle
+
+      mkdir "\$HOME/go"
+      export GOPATH="\$HOME/go"
+      export GOCACHE="\$PWD"
+
+      go build -mod=vendor
+      cp -a \$PWD/datadog-firehose-nozzle \${BOSH_INSTALL_TARGET}
+
+      EOF
+
     - echo "Validating release creation"
     - bosh create-release --force --tarball="datadog-firehose-nozzle.tgz"
     - echo "Comitting changes to the target branch ${TARGET_BRANCH}"
