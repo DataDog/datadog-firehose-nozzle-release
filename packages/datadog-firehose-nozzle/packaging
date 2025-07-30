@@ -1,6 +1,6 @@
 set -e -x
 
-export GOROOT=$(readlink -nf /var/vcap/packages/golang1.24.2)
+export GOROOT=$(readlink -nf /var/vcap/packages/golang1.24.4)
 export PATH=$GOROOT/bin:$PATH
 
 cd datadog-firehose-nozzle
@@ -11,3 +11,4 @@ export GOCACHE="$PWD"
 
 go build -mod=vendor
 cp -a $PWD/datadog-firehose-nozzle ${BOSH_INSTALL_TARGET}
+

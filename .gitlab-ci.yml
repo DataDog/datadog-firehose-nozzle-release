@@ -98,7 +98,7 @@ update-go-version:
       cat > "packages/${PACKAGE_NAME}/packaging" <<EOF
       set -e
 
-      tar xzf ${TARBALL_NAME}
+      tar xzf golang/${TARBALL_NAME}
       cp -R go/* \${BOSH_INSTALL_TARGET}
       EOF
 
@@ -131,6 +131,25 @@ update-go-version:
 
       files:
       - datadog-firehose-nozzle/**/*
+
+      EOF
+
+    - echo "Updating packages/datadog-firehose-nozzle/packaging to use ${PACKAGE_NAME}"
+    - |
+      cat > "packages/datadog-firehose-nozzle/packaging" <<EOF
+      set -e -x
+
+      export GOROOT=\$(readlink -nf /var/vcap/packages/${PACKAGE_NAME})
+      export PATH=\$GOROOT/bin:\$PATH
+
+      cd datadog-firehose-nozzle
+
+      mkdir "\$HOME/go"
+      export GOPATH="\$HOME/go"
+      export GOCACHE="\$PWD"
+
+      go build -mod=vendor
+      cp -a \$PWD/datadog-firehose-nozzle \${BOSH_INSTALL_TARGET}
 
       EOF
 
