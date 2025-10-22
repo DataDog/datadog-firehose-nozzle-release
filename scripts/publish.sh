@@ -36,7 +36,7 @@ mkdir -p $WORKING_DIR/blobstore
 # if bosh isn't on the docker image, download it
 if [ ! -f "/usr/local/bin/bosh" ]; then
   mkdir -p $WORKING_DIR/bin
-  curl -sSL -o $WORKING_DIR/bin/bosh https://s3.amazonaws.com/bosh-cli-artifacts/bosh-cli-2.0.48-linux-amd64
+  curl -sSL -o $WORKING_DIR/bin/bosh https://github.com/cloudfoundry/bosh-cli/releases/download/v7.9.12/bosh-cli-7.9.12-linux-amd64
   chmod +x $WORKING_DIR/bin/bosh
   export PATH="$WORKING_DIR/bin:$PATH"
 fi
