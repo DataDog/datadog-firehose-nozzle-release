@@ -109,7 +109,14 @@ JSON.pretty_generate(
     "DCAUrl"=>  dca_full_url,
     "DCAToken" => p("nozzle.dca_token", ""),
     "EnableAdvancedTagging" => p("nozzle.enable_advanced_tagging"),
-    "EnableMetadataAppMetricsPrefix" => p("nozzle.enable_metadata_app_metrics_prefix")
+    "EnableMetadataAppMetricsPrefix" => p("nozzle.enable_metadata_app_metrics_prefix"),
+    "BoshTagsConfig" => {
+        "BoshTags" => p("nozzle.bosh_tags.enabled", false),
+        "FriendlyHostname" => p("nozzle.bosh_tags.friendly_hostname", true),
+        "UniqueFriendlyHostname" => p("nozzle.bosh_tags.unique_friendly_hostname", false),
+        "FriendlyHostnameAppendGuid" => p("nozzle.bosh_tags.friendly_hostname_append_guid", false),
+        "UseUuidHostname" => p("nozzle.bosh_tags.use_uuid_hostname", false),
+    }
 )
 
 %>
