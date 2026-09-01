@@ -1,5 +1,9 @@
 # Changelog
 
+## 89 / 2026-09-01
+
+* [Changed] Fix `nozzle.num_workers` property name. See [#142](https://github.com/DataDog/datadog-firehose-nozzle-release/pull/142).
+
 ## 88 / 2025-10-14
 
 * [Changed] Bump nozzle version to 2.9.0. See [#132](https://github.com/DataDog/datadog-firehose-nozzle-release/pull/132).
