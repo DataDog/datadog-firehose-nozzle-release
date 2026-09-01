@@ -179,7 +179,7 @@ properties:
     description: Wheter or not to add "label/" or "annotation/" prefix to app metadata tags in app metrics.
   nozzle.bosh_tags.enabled:
     default: false
-    description: Enable BOSH tag generation from envelope metadata (replicates Datadog SaaS log enrichment for CloudPrem/BYOC)
+    description: Enable BOSH tag generation from envelope metadata (replicates Datadog SaaS log enrichment for CloudPrem/BYOC).
   nozzle.bosh_tags.friendly_hostname:
     default: true
     description: Use a friendly hostname format (job-index) instead of the raw VM GUID
